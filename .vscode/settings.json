@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-    ".env": "dotenv",
-    "data.h": "c",
-    "read.h": "c"
-  },
-  "C_Cpp.errorSquiggles": "Enabled"
-}

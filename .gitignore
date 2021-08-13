@@ -1,0 +1,4 @@
+*.o
+trab2
+entradas/
+.vscode/.vscode/settings.json
