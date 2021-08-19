@@ -1,6 +1,7 @@
 #include <string.h>
 #include "read.h"
 #include "../DataStructures/edges.h"
+#include "../DataStructures/component.h"
 
 int* read_servers(int num_servers, FILE* file){
   int* servers = (int*) malloc(sizeof(int)* num_servers);
@@ -70,9 +71,14 @@ char * define_buffer (FILE * file, size_t bufsize){
     return buffer;
 }
 
+void destroy_buffer(char* buffer){
+    free(buffer);
+} 
+
+
 Data* read_file(char* input_file){
   FILE* file; 
-  initialize_file(file, input_file);
+  file = initialize_file(file, input_file);
   size_t bufsize = 1;
   char * buffer = define_buffer(file, bufsize);
 
@@ -83,6 +89,9 @@ Data* read_file(char* input_file){
   
   int num_vertex = atoi(strtok(buffer, token));
   int num_edges = atoi(strtok(NULL, token));
+  printf("%d %d\n", num_vertex, num_edges);
+
+  set_num_edges(data, num_edges);
 
   getline(&buffer, &bufsize, file);
 
@@ -90,16 +99,28 @@ Data* read_file(char* input_file){
   int num_clients = atoi(strtok(NULL, token));
   int num_monitors = atoi(strtok(NULL, token));  
   
-  int* servers = read_servers(num_servers, file);
-  int* clients = read_clients(num_clients, file);
-  int* monitors = read_monitors(num_monitors, file);
+  destroy_buffer(buffer);
+
+  int* vet_servers = read_servers(num_servers, file);
+  Component* servers = create_component(num_servers, vet_servers);
+
+  int* vet_clients = read_clients(num_clients, file);
+  Component* clients = create_component(num_clients, vet_clients);
+  
+  int* vet_monitors = read_monitors(num_monitors, file);
+  Component* monitors = create_component(num_monitors,vet_monitors);
+
   Edges* edges = read_edges(num_edges, file);
   
   set_servers(data, servers);
   set_clients(data, clients);
   set_monitors(data, monitors);
   set_edges(data, edges);
- 
+
+  fclose(file);
+
+
+
   return data;  
 }
 

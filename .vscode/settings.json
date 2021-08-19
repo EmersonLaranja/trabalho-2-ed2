@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "stdlib.h": "c",
-        "edges.h": "c"
+        "edges.h": "c",
+        "data.h": "c",
+        "component.h": "c"
     }
 }
