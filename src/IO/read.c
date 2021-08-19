@@ -1,12 +1,12 @@
+#include <string.h>
 #include "read.h"
-#include <stdlib.h>
 #include "../DataStructures/edges.h"
 
 int* read_servers(int num_servers, FILE* file){
   int* servers = (int*) malloc(sizeof(int)* num_servers);
 
   for(int i = 0; i < num_servers; i++){
-      sscanf("%d", servers[i]);
+      fscanf(file, "%d", &servers[i]);
   }
   
   return servers;
@@ -16,7 +16,7 @@ int* read_clients(int num_clients, FILE* file){
   int* clients = (int*) malloc(sizeof(int)* num_clients);
 
   for(int i = 0; i < num_clients; i++){
-      sscanf("%d", clients[i]);
+      fscanf(file, "%d", &clients[i]);
   }
 
   return clients;
@@ -26,7 +26,7 @@ int* read_monitors(int num_monitors, FILE* file){
   int* monitors = (int*) malloc(sizeof(int)* num_monitors);
 
   for(int i = 0; i < num_monitors; i++){
-      sscanf("%d", monitors[i]);
+      fscanf(file, "%d", &monitors[i]);
   }
 
   return monitors;
@@ -53,14 +53,12 @@ FILE* initialize_file(FILE *file, char *name)
 
 void verify_args_length(int num_args)
 {
-  if (num_args < 3)
-  {
+  if (num_args < 3) {
     printf("ERRO: Quantidade de argumentos inválidos\n");
     exit(1);
   }
 
-  if (num_args <= 1)
-  {
+  if (num_args <= 1) {
     printf("ERRO: O diretorio de arquivos de configuracao nao foi informado\n");
     exit(1);
   }
@@ -79,7 +77,7 @@ Data* read_file(char* input_file){
   char * buffer = define_buffer(file, bufsize);
 
   Data* data = alloc_data();
-  const char token = ' ';
+  const char *token  = " ";
 
   getline(&buffer, &bufsize, file);
   
