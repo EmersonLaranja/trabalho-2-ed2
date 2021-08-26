@@ -1,5 +1,5 @@
-#ifndef PQ_H
-#define PQ_H
+#ifndef HEAP_H
+#define HEAP_H
 
 #include <stdbool.h>
 #include "item.h"
