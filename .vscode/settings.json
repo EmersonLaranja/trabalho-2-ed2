@@ -3,6 +3,7 @@
         "stdlib.h": "c",
         "edges.h": "c",
         "data.h": "c",
-        "component.h": "c"
+        "component.h": "c",
+        "stdio.h": "c"
     }
 }
