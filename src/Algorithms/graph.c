@@ -1,5 +1,4 @@
 #include "graph.h"
-#include "list.h"
 #include <stdlib.h>
 
 struct graph
@@ -7,6 +6,15 @@ struct graph
     int size_graph;
     List **array;
 };
+
+int get_size_graph(Graph *graph)
+{
+    return graph->size_graph;
+}
+List **get_array_graph(Graph *graph)
+{
+    return graph->array;
+}
 
 Graph *create_graph(int size_graph)
 {
@@ -18,12 +26,12 @@ Graph *create_graph(int size_graph)
 
     return graph;
 }
-void add_edge(Graph *graph, int src, int dest, double weight){
+void add_edge(Graph *graph, int src, int dest, double weight)
+{
 
-    List* new_node = new_list_node(dest,weight);
+    List *new_node = new_list_node(dest, weight);
     add_list_node(graph->array[src], new_node);
-    
+
     new_node = new_list_node(src, weight);
     add_list_node(graph->array[dest], new_node);
-
 }
