@@ -1,5 +1,6 @@
 #include "list.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct list
 {
@@ -7,6 +8,15 @@ struct list
     double weight;
     List *next;
 };
+
+void print_list(List *list)
+{
+
+    for (List *p = list; p != NULL; p = p->next)
+    {
+        printf("%d %lf \n", p->dest, p->weight);
+    }
+}
 
 int get_list_dest(List *list)
 {
@@ -35,19 +45,22 @@ List *new_list_node(int dest, double weight)
     return new_list;
 }
 
-void destroy_alloc_list(List *list)
-{
-    free(list);
-}
+// void destroy_alloc_list(List *list)
+// {
+//     free(list);
+// }
 
 void destroy_list(List *list)
 {
-    List *aux;
-    for (List *p = list; p != NULL; p = p->next)
+
+    List *p = list;
+    List *t = NULL;
+
+    while (p != NULL)
     {
-        aux = p;
-        p = p->next;
-        free(aux);
+        t = p->next;
+        free(p);
+        p = t;
     }
 }
 
@@ -57,13 +70,13 @@ List **alloc_list(int size_graph)
     for (int i = 0; i < size_graph; i++)
     {
         array_list[i] = (List *)malloc(sizeof(List));
-        array_list[i] = NULL;
     }
     return array_list;
 }
 
 void add_list_node(List **list, List **new_node)
 {
+    List *aux = *list;
     *list = *new_node;
-    (*new_node)->next = *list;
+    (*new_node)->next = aux;
 }

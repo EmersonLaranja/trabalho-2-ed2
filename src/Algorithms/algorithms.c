@@ -61,21 +61,38 @@ int main(int argc, char **argv)
   int V = 9;
   Graph *graph = create_graph(V);
   add_edge(graph, 0, 1, 4);
-  add_edge(graph, 0, 7, 8);
-  add_edge(graph, 1, 2, 8);
-  add_edge(graph, 1, 7, 11);
-  add_edge(graph, 2, 3, 7);
-  add_edge(graph, 2, 8, 2);
-  add_edge(graph, 2, 5, 4);
-  add_edge(graph, 3, 4, 9);
-  add_edge(graph, 3, 5, 14);
-  add_edge(graph, 4, 5, 10);
-  add_edge(graph, 5, 6, 2);
-  add_edge(graph, 6, 7, 1);
-  add_edge(graph, 6, 8, 6);
-  add_edge(graph, 7, 8, 7);
+  add_edge(graph, 1, 0, 8);
+  // add_edge(graph, 0, 7, 8);
+  // add_edge(graph, 1, 7, 11);
+  // add_edge(graph, 2, 3, 7);
+  // add_edge(graph, 2, 8, 2);
+  // add_edge(graph, 2, 5, 4);
+  // add_edge(graph, 3, 4, 9);
+  // add_edge(graph, 3, 5, 14);
+  // add_edge(graph, 4, 5, 10);
+  // add_edge(graph, 5, 6, 2);
+  // add_edge(graph, 6, 7, 1);
+  // add_edge(graph, 6, 8, 6);
+  // add_edge(graph, 7, 8, 7);
 
-  dijkstra(graph, 0);
-
+  // dijkstra(graph, 0);
+  print_graph(graph);
+  free_graph(graph);
   return 0;
 }
+
+/*5 9
+1 1 2
+0
+4
+1
+2
+0 1 10.0
+0 3 5.0
+1 3 2.0
+3 1 3.0
+1 2 1.0
+3 2 3.0
+2 4 4.0
+4 2 6.0
+4 0 7.0*/

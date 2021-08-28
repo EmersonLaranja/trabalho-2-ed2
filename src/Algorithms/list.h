@@ -12,5 +12,6 @@ void destroy_list(List *list);
 int get_list_dest(List *list);
 double get_list_weight(List *list);
 List *get_list_next(List *list);
+void print_list(List *list);
 
 #endif
