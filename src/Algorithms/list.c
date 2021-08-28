@@ -8,6 +8,17 @@ struct list
     List *next;
 };
 
+int get_list_dest(List* list){
+    return list->dest;
+}
+double get_list_weight(List* list){
+    return list->weight;
+}
+List* get_list_next(List* list){
+    return list->next;
+}
+
+
 List *init_list() {
     return NULL;
 }

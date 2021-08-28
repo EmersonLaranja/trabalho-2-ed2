@@ -9,6 +9,14 @@ struct wrapper
     int N;
 };
 
+Item make_item(int id, double value) {
+    Item t;
+    id(t) = id;
+    value(t) = value;
+    return t;
+}
+
+
 void swap(int i, int j, Wrapper *wrapper)
 {
     exch(wrapper->pq[i], wrapper->pq[j]);

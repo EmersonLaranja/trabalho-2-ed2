@@ -11,9 +11,9 @@ int get_size_graph(Graph *graph)
 {
     return graph->size_graph;
 }
-List **get_array_graph(Graph *graph)
+List *get_array_graph(Graph *graph, int id)
 {
-    return graph->array;
+    return graph->array[id];
 }
 
 Graph *create_graph(int size_graph)
