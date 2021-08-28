@@ -120,6 +120,7 @@ Data *read_file(char *input_file)
   Component *monitors = create_component(num_monitors, vet_monitors);
 
   Edges *edges = read_edges(num_edges, file);
+  //List_nodes **nodes = read_nodes(num_edges, file);
 
   set_servers(data, servers);
   set_clients(data, clients);

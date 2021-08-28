@@ -8,10 +8,10 @@ struct list
     List *next;
 };
 
-List *init_list()
-{
+List *init_list() {
     return NULL;
 }
+
 List *new_list_node(int dest, double weight)
 {
     List *new_list = (List *)malloc(sizeof(List));
@@ -21,13 +21,12 @@ List *new_list_node(int dest, double weight)
     return new_list;
 }
 
-
-void destroy_alloc_list(List *list)
+void destroy_alloc_list(List* list)
 {
     free(list);
 }
 
-void destroy_list(List *list)
+void destroy_list(List* list)
 {
     List *aux;
     for (List *p = list; p != NULL; p = p->next)
@@ -47,7 +46,7 @@ List **alloc_list(int size_graph)
     }
 }
 
-void add_list_node(List* list, List*new_node){
+void add_list_node(List* list, List* new_node){
 
     new_node->next = list;
     list = new_node;
