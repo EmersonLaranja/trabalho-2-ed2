@@ -8,18 +8,21 @@ struct list
     List *next;
 };
 
-int get_list_dest(List* list){
+int get_list_dest(List *list)
+{
     return list->dest;
 }
-double get_list_weight(List* list){
+double get_list_weight(List *list)
+{
     return list->weight;
 }
-List* get_list_next(List* list){
+List *get_list_next(List *list)
+{
     return list->next;
 }
 
-
-List *init_list() {
+List *init_list()
+{
     return NULL;
 }
 
@@ -32,12 +35,12 @@ List *new_list_node(int dest, double weight)
     return new_list;
 }
 
-void destroy_alloc_list(List* list)
+void destroy_alloc_list(List *list)
 {
     free(list);
 }
 
-void destroy_list(List* list)
+void destroy_list(List *list)
 {
     List *aux;
     for (List *p = list; p != NULL; p = p->next)
@@ -48,18 +51,18 @@ void destroy_list(List* list)
     }
 }
 
-
 List **alloc_list(int size_graph)
 {
-    List** array_list = (List **)malloc(size_graph * sizeof(List *));
-    for(int i =0 ; i< size_graph; i++){
-        array_list[i]  = init_list();
+    List **array_list = (List **)malloc(size_graph * sizeof(List *));
+    for (int i = 0; i < size_graph; i++)
+    {
+        array_list[i] = init_list();
     }
 }
 
-void add_list_node(List* list, List* new_node){
+void add_list_node(List **list, List **new_node)
+{
 
-    new_node->next = list;
-    list = new_node;
-
+    *list = *new_node;
+    (*new_node)->next = *list;
 }

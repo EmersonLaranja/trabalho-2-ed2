@@ -31,8 +31,8 @@ void add_edge(Graph *graph, int src, int dest, double weight)
 {
 
     List *new_node = new_list_node(dest, weight);
-    add_list_node(graph->array[src], new_node);
+    add_list_node(&graph->array[src], &new_node);
 
-    new_node = new_list_node(src, weight);
-    add_list_node(graph->array[dest], new_node);
+    // new_node = new_list_node(src, weight);
+    // add_list_node(graph->array[dest], new_node);
 }

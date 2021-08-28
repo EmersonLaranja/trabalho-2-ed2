@@ -9,13 +9,13 @@ struct wrapper
     int N;
 };
 
-Item make_item(int id, double value) {
+Item make_item(int id, double value)
+{
     Item t;
     id(t) = id;
     value(t) = value;
     return t;
 }
-
 
 void swap(int i, int j, Wrapper *wrapper)
 {
@@ -107,4 +107,11 @@ void PQ_finish(Wrapper *wrapper)
     free(wrapper->pq);
     free(wrapper->map);
     free(wrapper);
+}
+
+bool is_in_min_heap(Wrapper *wrapper, int v)
+{
+    if (wrapper->map[v] < wrapper->N)
+        return true;
+    return false;
 }
