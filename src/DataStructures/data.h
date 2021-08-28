@@ -10,11 +10,15 @@ void *destroy_data(Data *);
 void set_servers(Data *, Component *);
 void set_clients(Data *, Component *);
 void set_monitors(Data *, Component *);
+void set_edges(Data *, Edges *);
+void set_num_edges(Data *, int);
+void set_num_vertex(Data *, int);
+int get_num_edges(Data *);
+int get_num_vertex(Data *);
 Component *get_servers(Data *);
 Component *get_clients(Data *);
 Component *get_monitors(Data *);
-void set_edges(Data *, Edges *);
-void set_num_edges(Data *, int);
+
 void show_data(Data *);
 
 #endif
