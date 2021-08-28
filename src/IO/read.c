@@ -101,6 +101,7 @@ Data *read_file(char *input_file)
   printf("%d %d\n", num_vertex, num_edges);
 
   set_num_edges(data, num_edges);
+  set_num_vertex(data, num_vertex);
 
   getline(&buffer, &bufsize, file);
 
