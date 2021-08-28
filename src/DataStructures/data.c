@@ -8,6 +8,7 @@ struct data
   Component *monitors;
   Edges *edges;
   int num_edges;
+  int num_vertex;
 };
 
 Data *alloc_data()
@@ -63,6 +64,19 @@ void set_num_edges(Data *data, int num_edges)
 {
   data->num_edges = num_edges;
 }
+void set_num_vertex(Data *data, int num_vertex)
+{
+  data->num_vertex = num_vertex;
+}
+
+int get_num_edges(Data *data)
+{
+  return data->num_edges;
+};
+int get_num_vertex(Data *data)
+{
+  return data->num_vertex;
+};
 
 void show_data(Data *data)
 {
