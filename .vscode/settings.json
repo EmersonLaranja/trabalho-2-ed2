@@ -6,6 +6,8 @@
         "data.h": "c",
         "component.h": "c",
         "stdio.h": "c",
-        "read.h": "c"
+        "read.h": "c",
+        "limits.h": "c",
+        "float.h": "c"
     }
 }

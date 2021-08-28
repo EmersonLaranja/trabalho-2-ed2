@@ -56,13 +56,14 @@ List **alloc_list(int size_graph)
     List **array_list = (List **)malloc(size_graph * sizeof(List *));
     for (int i = 0; i < size_graph; i++)
     {
-        array_list[i] = init_list();
+        array_list[i] = (List *)malloc(sizeof(List));
+        array_list[i] = NULL;
     }
+    return array_list;
 }
 
 void add_list_node(List **list, List **new_node)
 {
-
     *list = *new_node;
     (*new_node)->next = *list;
 }
