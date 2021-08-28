@@ -1,5 +1,4 @@
 #include "graph.h"
-#include "list.h"
 #include <stdlib.h>
 
 struct graph
@@ -7,6 +6,15 @@ struct graph
     int size_graph;
     List **array;
 };
+
+int get_size_graph(Graph *graph)
+{
+    return graph->size_graph;
+}
+List **get_array_graph(Graph *graph)
+{
+    return graph->array;
+}
 
 Graph *create_graph(int size_graph)
 {
