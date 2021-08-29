@@ -1,14 +1,23 @@
 #ifndef ITEM_H
 #define ITEM_H
-
-typedef struct {
-  int id;           // identificador do nó
-  double value;     // valor associado ao nó
+#include <stdio.h>
+typedef struct
+{
+  int id;       // identificador do nó
+  double value; // valor associado ao nó
 } Item;
 
-#define id(A)          (A.id)                           // retorna identificador do nó
-#define value(A)        (A.value)                       // retorna valor do nó
-#define more(A, B)      (value(A) > value(B))           // compara nós, por valor
-#define exch(A, B)      { Item t = A; A = B; B = t; }   // troca dois nós
+#define id(A) (A.id)                     // retorna identificador do nó
+#define value(A) (A.value)               // retorna valor do nó
+#define more(A, B) (value(A) > value(B)) // compara nós, por valor
+#define exch(A, B) \
+  {                \
+    Item t = A;    \
+    A = B;         \
+    B = t;         \
+  } // troca dois nós
+
+Item create_item(int id, double value);
+void show_item(Item item);
 
 #endif

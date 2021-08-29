@@ -1,7 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
-#include "edges.h"
 #include "component.h"
+#include "list.h"
 
 typedef struct data Data;
 
@@ -10,7 +10,7 @@ void *destroy_data(Data *);
 void set_servers(Data *, Component *);
 void set_clients(Data *, Component *);
 void set_monitors(Data *, Component *);
-void set_edges(Data *, Edges *);
+void set_edges(Data *, List **);
 void set_num_edges(Data *, int);
 void set_num_vertex(Data *, int);
 int get_num_edges(Data *);

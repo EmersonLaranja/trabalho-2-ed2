@@ -5,8 +5,8 @@
 
 struct node
 {
-    Item vertice;
     Node *next;
+    Item vertex;
 };
 
 struct list
@@ -14,6 +14,16 @@ struct list
     Node *start;
     Node *end;
 };
+
+Item return_item(Node *node)
+{
+    return node->vertex;
+}
+
+Node *return_start_node(List *list)
+{
+    return list->start;
+}
 
 List *init_list()
 {
@@ -24,10 +34,10 @@ List *init_list()
     return list;
 }
 
-void insert_node(List *list, Item vertice)
+List *insert_node(List *list, Item vertex)
 {
     Node *new = (Node *)malloc(sizeof(Node));
-    new->vertice = vertice;
+    new->vertex = vertex;
     new->next = list->start;
     list->start = new;
 
@@ -35,6 +45,7 @@ void insert_node(List *list, Item vertice)
     {
         list->end = new;
     }
+    return list;
 }
 
 void free_list(List *list)
@@ -50,29 +61,54 @@ void free_list(List *list)
     free(list);
 }
 
+/*
+void freeArrayList(list ** al, int V) {
+    for (int i = V - 1; i >= 0; ++i) {
+        while (al[i]->start != NULL) {
+            deleteNode(al[i]);
+        }
+        free(al[i]);
+    }
+}
+*/
 void free_array_list(List **list, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        free_list(list[i]);
+        if (list[i] != NULL)
+            free_list(list[i]);
     }
     free(list);
 }
 
-void imprimeLista(List *list){
+void show_array_list(List **edges, int num_vertex)
+{
+    for (int i = 0; i < num_vertex; i++)
+    {
+        if (edges[i] != NULL)
+            show_list(edges[i]);
+    }
+};
+
+void show_list(List *list)
+{
     Node *p;
     for (p = list->start; p != NULL; p = p->next)
     {
-        printf("%d - %.8lf\n", p->vertice.id, p->vertice.value);
+        show_item(p->vertex);
+        // printf("%d - %.8lf\n", p->vertex.id, p->vertex.value);
     }
 }
 
-void update_dist(List** list, int id_min, double* min_dist, Wrapper* min_heap){
-    for(Node* p = list[id_min]->start; p !=NULL; p = p->next){
-        double dist = min_dist[id_min] + p->vertice.value;
-        int id = p->vertice.id;
-        
-        if(dist< min_dist[id]){
+void update_dist(List **list, int id_min, double *min_dist, Wrapper *min_heap)
+{
+    for (Node *p = list[id_min]->start; p != NULL; p = p->next)
+    {
+        double dist = min_dist[id_min] + p->vertex.value;
+        int id = p->vertex.id;
+
+        if (dist < min_dist[id])
+        {
             min_dist[id] = dist;
             PQ_decrease_key(id, dist, min_heap);
         }

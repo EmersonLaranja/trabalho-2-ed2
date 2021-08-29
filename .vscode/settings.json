@@ -9,6 +9,7 @@
         "read.h": "c",
         "limits.h": "c",
         "float.h": "c",
-        "list.h": "c"
+        "list.h": "c",
+        "item.h": "c"
     }
 }

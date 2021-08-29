@@ -5,12 +5,12 @@
 #include "../DataStructures/data.h"
 
 /* Retirar o Edge / Criar Hash? */
-void dijkstra(int id, int number_vertices, double *dist, List **list)
+void dijkstra(int id, int number_vertexs, double *dist, List **list)
 {
 
-    Wrapper *min_heap = PQ_init(number_vertices);
+    Wrapper *min_heap = PQ_init(number_vertexs);
 
-    for (int i = 0; i < number_vertices; i++)
+    for (int i = 0; i < number_vertexs; i++)
     {
         dist[i] = INT_MAX;
         PQ_insert(make_item(i, dist[i]), min_heap);
@@ -32,25 +32,26 @@ int main(int argc, char **argv)
 
     show_data(data);
 
-    int S = get_size_component(get_servers(data));
-    int M = get_size_component(get_monitors(data));
-    int C = get_size_component(get_clients(data));
-    int num_vertices = get_num_vertex(data);
+    // int S = get_size_component(get_servers(data));
+    // int M = get_size_component(get_monitors(data));
+    // int C = get_size_component(get_clients(data));
+    // int num_vertexs = get_num_vertex(data);
 
-    double* dist_min = (double*)malloc(sizeof(double) * num_vertices);
+    // double *dist_min = (double *)malloc(sizeof(double) * num_vertexs);
 
-    // for(int i = 0; i < S; i++){
-        
+    // for (int i = 0; i < S; i++)
+    // {
+
     //     int element_id = get_element_id_component(get_servers(data), i);
-    //     // dist_min = dijkstra(element_id, num_vertices,  );
+    //     dijkstra(element_id, num_vertexs, dist_min, );
     // }
 
-    // for(int i = 0; i < M; i++){
-        
+    // for (int i = 0; i < M; i++)
+    // {
     // }
-    
-    // for(int i = 0; i < C; i++){
-        
+
+    // for (int i = 0; i < C; i++)
+    // {
     // }
     destroy_data(data);
     return 0;

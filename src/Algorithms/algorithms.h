@@ -2,8 +2,6 @@
 #define ALGORITHMS_H
 #include "../DataStructures/list.h"
 
-void dijkstra(int id, int number_vertices, double *dist, List **list);
-
-
+void dijkstra(int id, int number_vertexs, double *dist, List **list);
 
 #endif

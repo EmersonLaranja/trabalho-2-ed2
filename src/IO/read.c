@@ -1,6 +1,5 @@
 #include <string.h>
 #include "read.h"
-#include "../DataStructures/edges.h"
 #include "../DataStructures/component.h"
 
 int *read_servers(int num_servers, FILE *file)
@@ -37,6 +36,41 @@ int *read_monitors(int num_monitors, FILE *file)
   }
 
   return monitors;
+}
+
+List **init_edges_array(List **edges, int num_vertices)
+{
+  for (int i = 0; i < num_vertices; i++)
+  {
+    edges[i] = NULL; //necessario para verificar se uma lista de edge já foi inicializada
+  }
+}
+
+List *create_edge_list(List *edge, int destine, double weight)
+{
+
+  if (edge == NULL)
+  { //se o edge de origin nao existe
+    edge = init_list();
+  }
+  edge = insert_node(edge, create_item(destine, weight)); //inserindo todos destinos de um mesmo origin
+  return edge;
+}
+
+List **read_edges(int num_edges, int num_vertex, FILE *file)
+{
+  List **edges = (List **)malloc(sizeof(List *) * num_vertex);
+  init_edges_array(edges, num_vertex);
+
+  int origin, destine;
+  double weight;
+  for (int i = 0; i < num_edges; i++)
+  {
+    fscanf(file, "%d %d %lf", &origin, &destine, &weight);
+    edges[origin] = create_edge_list(edges[origin], destine, weight);
+  }
+
+  return edges;
 }
 
 void file_was_opened(FILE *file)
@@ -120,9 +154,7 @@ Data *read_file(char *input_file)
   int *vet_monitors = read_monitors(num_monitors, file);
   Component *monitors = create_component(num_monitors, vet_monitors);
 
-
-  Edges *edges = read_edges(num_edges, file);
-  //List_nodes **nodes = read_nodes(num_edges, file);
+  List **edges = read_edges(num_edges, num_vertex, file);
 
   set_servers(data, servers);
   set_clients(data, clients);
