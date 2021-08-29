@@ -8,10 +8,8 @@ struct component
     int size;
 };
 
-
 Component *create_component(int size, int *vector)
 {
-
     Component *component = (Component *)malloc(sizeof(Component));
     component->size = size;
     component->vector = vector;

@@ -10,7 +10,16 @@ struct statistics
     int size_m;
     int size_c;
     Path **path_array;
+    int size_path_array;
 };
+
+int get_size_array(Statistics* stat){
+    return stat->size_path_array;
+}
+
+Path* get_current_path(Statistics *stat, int index){
+    return stat->path_array[index];
+}
 
 /* Calcula o RTT com relação a todos os monitores */
 double calculate_relative_rtt(Statistics *stat, int pos_s, int pos_c)
@@ -19,7 +28,7 @@ double calculate_relative_rtt(Statistics *stat, int pos_s, int pos_c)
     double relative;
     for (int m = 0; m < stat->size_m; m++)
     {
-        relative = stat->rtt_sm[pos_s][m] + stat->rtt_mc[pos_c][m];
+        relative = stat->rtt_sm[pos_s][m] + stat->rtt_mc[m][pos_c];
         if (min > relative)
         {
             min = relative;
@@ -48,8 +57,7 @@ void calculate_inflaction(Statistics *stat)
 
 void order_path_array(Statistics *stat)
 {
-    int size_path = stat->size_s * stat->size_c;
-    qsort(stat->path_array, size_path, sizeof(Path *), compare_path);
+    qsort(stat->path_array, stat->size_path_array, sizeof(Path *), compare_path);
 }
 
 Statistics *create_statistics(Data *data)
@@ -60,14 +68,8 @@ Statistics *create_statistics(Data *data)
     stat->size_m = get_size_component(get_monitors(data));
     stat->size_c = get_size_component(get_clients(data));
 
-    int size_path = stat->size_s * stat->size_c;
-    stat->path_array = (Path **)malloc(size_path * sizeof(Path *));
-
-    stat->rtt_mc = (double **)malloc(sizeof(double *) * stat->size_m);
-    for (int i = 0; i < stat->size_m; i++)
-    {
-        stat->rtt_mc[i] = (double *)malloc(sizeof(double) * stat->size_c);
-    }
+    stat->size_path_array = stat->size_s * stat->size_c;
+    stat->path_array = (Path **)malloc(stat->size_path_array * sizeof(Path *));
 
     stat->rtt_sm = (double **)malloc(sizeof(double *) * stat->size_s);
     for (int i = 0; i < stat->size_s; i++)
@@ -75,23 +77,20 @@ Statistics *create_statistics(Data *data)
         stat->rtt_sm[i] = (double *)malloc(sizeof(double) * stat->size_m);
     }
 
+    stat->rtt_mc = (double **)malloc(sizeof(double *) * stat->size_m);
+    for (int i = 0; i < stat->size_m; i++)
+    {
+        stat->rtt_mc[i] = (double *)malloc(sizeof(double) * stat->size_c);
+    }
+
     stat->rtt_sc = (double **)malloc(sizeof(double *) * stat->size_s);
     for (int i = 0; i < stat->size_s; i++)
     {
         stat->rtt_sc[i] = (double *)malloc(sizeof(double) * stat->size_c);
     }
+
     return stat;
 }
-
-// static void(double *dist_min, double **matrix, int size, );
-// void calculate_distances(Statistics *stat, Data *data, Component *get_function(), int get_size())
-// {
-//     for (int i = 0; i < get_size(); i++)
-//     {
-//         int id = get_element_id_component(get_function(), i);
-//         dijkstra(id, get_num_vertices(data), dist_min, get_edges(data));
-//     }
-// }
 
 void calculate_distances(Statistics *stat, Data *data)
 {
@@ -169,7 +168,7 @@ void destroy_statistics(Statistics *stat)
     }
     free(stat->rtt_sc);
 
-    //destroy_path_array(stat->path_array, (stat->size_c * stat->size_s));
+    destroy_path_array(stat->path_array, stat->size_path_array);
 
     free(stat->path_array);
     free(stat);
