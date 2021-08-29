@@ -10,6 +10,9 @@
         "limits.h": "c",
         "float.h": "c",
         "list.h": "c",
-        "item.h": "c"
+        "item.h": "c",
+        "statistics.h": "c",
+        "algorithms.h": "c",
+        "path.h": "c"
     }
 }

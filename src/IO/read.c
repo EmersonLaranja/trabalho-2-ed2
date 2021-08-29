@@ -57,10 +57,10 @@ List *create_edge_list(List *edge, int destine, double weight)
   return edge;
 }
 
-List **read_edges(int num_edges, int num_vertex, FILE *file)
+List **read_edges(int num_edges, int num_vertices, FILE *file)
 {
-  List **edges = (List **)malloc(sizeof(List *) * num_vertex);
-  init_edges_array(edges, num_vertex);
+  List **edges = (List **)malloc(sizeof(List *) * num_vertices);
+  init_edges_array(edges, num_vertices);
 
   int origin, destine;
   double weight;
@@ -130,12 +130,11 @@ Data *read_file(char *input_file)
 
   getline(&buffer, &bufsize, file);
 
-  int num_vertex = atoi(strtok(buffer, token));
+  int num_vertices = atoi(strtok(buffer, token));
   int num_edges = atoi(strtok(NULL, token));
-  printf("%d %d\n", num_vertex, num_edges);
 
   set_num_edges(data, num_edges);
-  set_num_vertex(data, num_vertex);
+  set_num_vertices(data, num_vertices);
 
   getline(&buffer, &bufsize, file);
 
@@ -154,7 +153,7 @@ Data *read_file(char *input_file)
   int *vet_monitors = read_monitors(num_monitors, file);
   Component *monitors = create_component(num_monitors, vet_monitors);
 
-  List **edges = read_edges(num_edges, num_vertex, file);
+  List **edges = read_edges(num_edges, num_vertices, file);
 
   set_servers(data, servers);
   set_clients(data, clients);

@@ -3,19 +3,19 @@
 #include <stdio.h>
 #include "../IO/read.h"
 #include "../DataStructures/data.h"
+#include "../DataStructures/statistics.h"
 
-/* Retirar o Edge / Criar Hash? */
-void dijkstra(int id, int number_vertexs, double *dist, List **list)
+void dijkstra(int id, int number_vertices, double *dist, List **list)
 {
+    Wrapper *min_heap = PQ_init(number_vertices);
 
-    Wrapper *min_heap = PQ_init(number_vertexs);
-
-    for (int i = 0; i < number_vertexs; i++)
+    for (int i = 0; i < number_vertices; i++)
     {
-        dist[i] = INT_MAX;
+        dist[i] = (double)INT_MAX;
         PQ_insert(make_item(i, dist[i]), min_heap);
     }
     PQ_decrease_key(id, 0, min_heap);
+    dist[id] = 0;
 
     while (!PQ_empty(min_heap))
     {
@@ -23,36 +23,31 @@ void dijkstra(int id, int number_vertexs, double *dist, List **list)
         update_dist(list, min.id, dist, min_heap);
     }
     PQ_finish(min_heap);
-    free(min_heap);
 }
 
-int main(int argc, char **argv)
+double *dist_min_initialize(int size)
 {
-    Data *data = read_file(argv[1]);
+    double *dist_min = (double *)malloc(sizeof(double) * size);
 
-    show_data(data);
+    for (int i = 0; i < size; i++)
+    {
+        dist_min[i] = 0;
+    }
 
-    // int S = get_size_component(get_servers(data));
-    // int M = get_size_component(get_monitors(data));
-    // int C = get_size_component(get_clients(data));
-    // int num_vertexs = get_num_vertex(data);
-
-    // double *dist_min = (double *)malloc(sizeof(double) * num_vertexs);
-
-    // for (int i = 0; i < S; i++)
-    // {
-
-    //     int element_id = get_element_id_component(get_servers(data), i);
-    //     dijkstra(element_id, num_vertexs, dist_min, );
-    // }
-
-    // for (int i = 0; i < M; i++)
-    // {
-    // }
-
-    // for (int i = 0; i < C; i++)
-    // {
-    // }
-    destroy_data(data);
-    return 0;
+    return dist_min;
 }
+
+// int main(int argc, char **argv)
+// {
+//     Data *data = read_file(argv[1]);
+
+//     double *dist_min = dist_min_initialize(get_num_vertices(data));
+
+//     Statistics *statistics = create_statistics(data);
+//     calculate_distances(statistics, data);
+//     output_statistics(statistics);
+//     // free(dist_min);
+//     destroy_statistics(statistics);
+//     destroy_data(data);
+//     return 0;
+// }

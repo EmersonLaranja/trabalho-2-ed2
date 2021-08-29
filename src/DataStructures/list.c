@@ -6,7 +6,7 @@
 struct node
 {
     Node *next;
-    Item vertex;
+    Item vertices;
 };
 
 struct list
@@ -17,7 +17,7 @@ struct list
 
 Item return_item(Node *node)
 {
-    return node->vertex;
+    return node->vertices;
 }
 
 Node *return_start_node(List *list)
@@ -34,10 +34,10 @@ List *init_list()
     return list;
 }
 
-List *insert_node(List *list, Item vertex)
+List *insert_node(List *list, Item vertices)
 {
     Node *new = (Node *)malloc(sizeof(Node));
-    new->vertex = vertex;
+    new->vertices = vertices;
     new->next = list->start;
     list->start = new;
 
@@ -81,9 +81,9 @@ void free_array_list(List **list, int size)
     free(list);
 }
 
-void show_array_list(List **edges, int num_vertex)
+void show_array_list(List **edges, int num_vertices)
 {
-    for (int i = 0; i < num_vertex; i++)
+    for (int i = 0; i < num_vertices; i++)
     {
         if (edges[i] != NULL)
             show_list(edges[i]);
@@ -95,8 +95,7 @@ void show_list(List *list)
     Node *p;
     for (p = list->start; p != NULL; p = p->next)
     {
-        show_item(p->vertex);
-        // printf("%d - %.8lf\n", p->vertex.id, p->vertex.value);
+        show_item(p->vertices);
     }
 }
 
@@ -104,8 +103,8 @@ void update_dist(List **list, int id_min, double *min_dist, Wrapper *min_heap)
 {
     for (Node *p = list[id_min]->start; p != NULL; p = p->next)
     {
-        double dist = min_dist[id_min] + p->vertex.value;
-        int id = p->vertex.id;
+        double dist = min_dist[id_min] + p->vertices.value;
+        int id = p->vertices.id;
 
         if (dist < min_dist[id])
         {

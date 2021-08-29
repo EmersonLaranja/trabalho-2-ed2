@@ -9,7 +9,7 @@ struct data
   Component *monitors;
   List **edges;
   int num_edges;
-  int num_vertex;
+  int num_vertices;
 };
 
 Data *alloc_data()
@@ -23,7 +23,7 @@ void show_data(Data *data)
   show_component(data->servers);
   show_component(data->clients);
   show_component(data->monitors);
-  show_array_list(data->edges, data->num_vertex);
+  show_array_list(data->edges, data->num_vertices);
 }
 
 void *destroy_data(Data *data)
@@ -32,7 +32,7 @@ void *destroy_data(Data *data)
   destroy_component(data->servers);
   destroy_component(data->clients);
   destroy_component(data->monitors);
-  free_array_list(data->edges, data->num_vertex);
+  free_array_list(data->edges, data->num_vertices);
   free(data);
 }
 
@@ -61,9 +61,9 @@ void set_num_edges(Data *data, int num_edges)
   data->num_edges = num_edges;
 }
 
-void set_num_vertex(Data *data, int num_vertex)
+void set_num_vertices(Data *data, int num_vertices)
 {
-  data->num_vertex = num_vertex;
+  data->num_vertices = num_vertices;
 }
 
 // -------------getters----------
@@ -82,11 +82,16 @@ Component *get_monitors(Data *data)
   return data->monitors;
 }
 
+List **get_edges(Data *data)
+{
+  return data->edges;
+}
+
 int get_num_edges(Data *data)
 {
   return data->num_edges;
 };
-int get_num_vertex(Data *data)
+int get_num_vertices(Data *data)
 {
-  return data->num_vertex;
+  return data->num_vertices;
 };
