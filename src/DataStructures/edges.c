@@ -25,7 +25,10 @@ Edges *read_edges(int num_edges, FILE *file)
   for (int i = 0; i < num_edges; i++)
   {
     fscanf(file, "%d %d %lf", &edges[i].a, &edges[i].b, &edges[i].distance);
+    
   }
+
+
 
   return edges;
 }

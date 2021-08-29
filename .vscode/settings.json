@@ -8,6 +8,7 @@
         "stdio.h": "c",
         "read.h": "c",
         "limits.h": "c",
-        "float.h": "c"
+        "float.h": "c",
+        "list.h": "c"
     }
 }

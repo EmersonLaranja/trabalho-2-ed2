@@ -1,55 +1,57 @@
 #include "algorithms.h"
-#include "list.h"
+#include <limits.h>
+#include <stdio.h>
+#include "../IO/read.h"
+#include "../DataStructures/data.h"
 
-void dijkstra(int id, List** list,  ){
+/* Retirar o Edge / Criar Hash? */
+void dijkstra(int id, int number_vertices, double *dist, List **list)
+{
 
+    Wrapper *min_heap = PQ_init(number_vertices);
 
+    for (int i = 0; i < number_vertices; i++)
+    {
+        dist[i] = INT_MAX;
+        PQ_insert(make_item(i, dist[i]), min_heap);
+    }
+    PQ_decrease_key(id, 0, min_heap);
 
+    while (!PQ_empty(min_heap))
+    {
+        Item min = PQ_delmin(min_heap);
+        update_dist(list, min.id, dist, min_heap);
+    }
+    PQ_finish(min_heap);
+    free(min_heap);
 }
-// }
 
+int main(int argc, char **argv)
+{
+    Data *data = read_file(argv[1]);
 
+    show_data(data);
 
-// void dijkstra(Graph *graph, int src)
-// {
-//   int number_vertices_graph = get_size_graph(graph);
-//   double *dist = (double *)malloc(sizeof(double) * number_vertices_graph);
+    int S = get_size_component(get_servers(data));
+    int M = get_size_component(get_monitors(data));
+    int C = get_size_component(get_clients(data));
+    int num_vertices = get_num_vertex(data);
 
-//   Wrapper *min_heap = PQ_init(number_vertices_graph);
+    double* dist_min = (double*)malloc(sizeof(double) * num_vertices);
 
-//   for (int i = 0; i < number_vertices_graph; i++)
-//   {
-//     dist[i] = FLT_MAX;
-//     PQ_insert(make_item(i, dist[i]), min_heap);
-//   }
+    // for(int i = 0; i < S; i++){
+        
+    //     int element_id = get_element_id_component(get_servers(data), i);
+    //     // dist_min = dijkstra(element_id, num_vertices,  );
+    // }
 
-//   PQ_decrease_key(src, 0, min_heap);
-
-//   while (!PQ_empty(min_heap))
-//   {
-
-//     Item min = PQ_delmin(min_heap);
-//     int id_min_node = min.id;
-
-//     List *pCrawl = get_array_graph(graph, id_min_node);
-
-//     while (pCrawl != NULL)
-//     {
-
-//       int dest = get_list_dest(pCrawl);
-
-//       //!: fazer uma funÃ§ao retorna bool
-//       /*v==dest u==id_min_node*/
-//       if (is_in_min_heap(min_heap, dest) &&
-//           dist[id_min_node] != FLT_MAX &&
-//           get_list_weight(pCrawl) + dist[id_min_node] < dist[dest])
-//       {
-//         dist[dest] = dist[id_min_node] + get_list_weight(pCrawl);
-
-//         PQ_decrease_key(dest, dist[dest], min_heap);
-//       }
-//       pCrawl = get_list_next(pCrawl);
-//     }
-//   }
-//   printArr(dist, get_size_graph(graph));
-// }
+    // for(int i = 0; i < M; i++){
+        
+    // }
+    
+    // for(int i = 0; i < C; i++){
+        
+    // }
+    destroy_data(data);
+    return 0;
+}

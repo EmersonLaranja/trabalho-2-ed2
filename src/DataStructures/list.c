@@ -67,16 +67,14 @@ void imprimeLista(List *list){
     }
 }
 
-// int main()
-// {
-//     List *list = init_list();
-//     insert_node(list, make_item(1, 2424));
-//     insert_node(list, make_item(5, 2545));
-//     insert_node(list, make_item(8, 7575));
-//     insert_node(list, make_item(2, 3456));
-//     insert_node(list, make_item(2, 63576));
-//     insert_node(list, make_item(86, 4334));
-
-//     imprimeLista(list);
-//     free_list(list);
-// }
+void update_dist(List** list, int id_min, double* min_dist, Wrapper* min_heap){
+    for(Node* p = list[id_min]->start; p !=NULL; p = p->next){
+        double dist = min_dist[id_min] + p->vertice.value;
+        int id = p->vertice.id;
+        
+        if(dist< min_dist[id]){
+            min_dist[id] = dist;
+            PQ_decrease_key(id, dist, min_heap);
+        }
+    }
+}

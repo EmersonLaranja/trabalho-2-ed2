@@ -17,4 +17,5 @@ List *init_list();
 void insert_node(List *list, Item vertice);
 void free_list(List * list);
 void free_array_list(List** list, int size);
+void update_dist(List**list, int id_min,double* min_dist, Wrapper* min_heap);
 #endif

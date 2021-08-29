@@ -8,6 +8,7 @@ struct component
     int size;
 };
 
+
 Component *create_component(int size, int *vector)
 {
 
@@ -34,4 +35,8 @@ void show_component(Component *component)
         printf("%d ", component->vector[i]);
     }
     printf("\n");
+}
+
+int get_element_id_component(Component* component, int position){
+    return component->vector[position];
 }
