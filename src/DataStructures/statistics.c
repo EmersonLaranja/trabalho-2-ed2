@@ -15,7 +15,7 @@ struct statistics
 /* Calcula o RTT com relação a todos os monitores */
 double calculate_relative_rtt(Statistics *stat, int pos_s, int pos_c)
 {
-    int min = (double)INT_MAX;
+    double min = (double)INT_MAX;
     double relative;
     for (int m = 0; m < stat->size_m; m++)
     {
@@ -28,7 +28,7 @@ double calculate_relative_rtt(Statistics *stat, int pos_s, int pos_c)
     return min;
 }
 
-double calculate_inflaction(Statistics *stat)
+void calculate_inflaction(Statistics *stat)
 {
     int quant = 0;
     double inflaction = 0;
@@ -40,7 +40,8 @@ double calculate_inflaction(Statistics *stat)
             inflaction /= stat->rtt_sc[s][c];
 
             Path *path = create_path(s, c, inflaction);
-            stat->path_array[quant++] = path;
+            stat->path_array[quant] = path;
+            quant++;
         }
     }
 }
@@ -60,7 +61,7 @@ Statistics *create_statistics(Data *data)
     stat->size_c = get_size_component(get_clients(data));
 
     int size_path = stat->size_s * stat->size_c;
-    Path **path_array = (Path **)malloc(size_path * sizeof(Path *));
+    stat->path_array = (Path **)malloc(size_path * sizeof(Path *));
 
     stat->rtt_mc = (double **)malloc(sizeof(double *) * stat->size_m);
     for (int i = 0; i < stat->size_m; i++)
@@ -104,7 +105,7 @@ void calculate_distances(Statistics *stat, Data *data)
         for (int k = 0; k < stat->size_s; k++)
         {
             int pos = get_element_id_component(get_servers(data), k);
-            stat->rtt_sc[i][k] = dist_min[pos];
+            stat->rtt_sc[k][i] = dist_min[pos];
         }
         for (int k = 0; k < stat->size_m; k++)
         {
@@ -120,7 +121,7 @@ void calculate_distances(Statistics *stat, Data *data)
         for (int k = 0; k < stat->size_s; k++)
         {
             int pos = get_element_id_component(get_servers(data), k);
-            stat->rtt_sc[i][k] = dist_min[pos];
+            stat->rtt_sm[k][i] = dist_min[pos];
         }
         for (int k = 0; k < stat->size_c; k++)
         {
@@ -136,12 +137,12 @@ void calculate_distances(Statistics *stat, Data *data)
         for (int k = 0; k < stat->size_c; k++)
         {
             int pos = get_element_id_component(get_clients(data), k);
-            stat->rtt_sc[k][i] = stat->rtt_sc[k][i] + dist_min[pos];
+            stat->rtt_sc[i][k] = stat->rtt_sc[k][i] + dist_min[pos];
         }
         for (int k = 0; k < stat->size_m; k++)
         {
             int pos = get_element_id_component(get_monitors(data), k);
-            stat->rtt_sm[k][i] = stat->rtt_sm[k][i] + dist_min[pos];
+            stat->rtt_sm[i][k] = stat->rtt_sm[i][k] + dist_min[pos];
         }
     }
 
@@ -168,7 +169,8 @@ void destroy_statistics(Statistics *stat)
     }
     free(stat->rtt_sc);
 
-    // destroy_path_array(stat->path_array, (stat->size_c * stat->size_s));
+    //destroy_path_array(stat->path_array, (stat->size_c * stat->size_s));
+
     free(stat->path_array);
     free(stat);
 }

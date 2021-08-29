@@ -9,7 +9,7 @@ int main(int argc, char **argv)
   Data *data = read_file(argv[1]);
 
   Statistics *statistics = create_statistics(data);
-  // calculate_distances(statistics, data);
+  calculate_distances(statistics, data);
   // output_statistics(statistics);
 
   destroy_statistics(statistics);

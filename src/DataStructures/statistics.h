@@ -8,6 +8,7 @@ typedef struct statistics Statistics;
 
 Statistics *create_statistics(Data *data);
 void destroy_statistics(Statistics *stat);
+void calculate_inflaction(Statistics *stat);
 void calculate_distances(Statistics *stat, Data *data);
 
 #endif

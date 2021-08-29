@@ -23,11 +23,11 @@ Path **init_path(int size)
 
 void destroy_path_array(Path **path, int size)
 {
-  // for (int i = 0; i < size; i++)
-  // {
-  //   free(path[i]);
-  // }
-};
+   for (int i = 0; i < size; i++)
+   {
+     free(path[i]);
+   }
+}
 
 // ------getters---------
 int get_origin(Path *path)
