@@ -65,6 +65,13 @@ double ** alloc_matrix(int num_l, int num_c){
     for(int i = 0; i < num_l; i++){
         matrix[i] = (double *)malloc(sizeof(double) * num_c);
     }
+
+    for(int i = 0; i< num_l; i ++){
+        for(int j = 0 ; j < num_c; j++){
+            matrix[i][j] = 0;
+        }
+    }
+
     return matrix;
 }
 
@@ -96,58 +103,59 @@ void imprimeMatriz(double** matriz, int linha, int coluna){
     }
 }
 
+
+void fill_partially_rtt_c(Data*data,double* dist_min, double**rtt, int size, int i){ // mantem fixa a coluna
+
+    for(int k = 0; k< size; k++){
+        int pos = get_element_id_component(get_servers(data), k);
+        rtt[k][i] += dist_min[pos];
+    }
+
+}
+
+void fill_partially_rtt_l(Data*data,double* dist_min, double**rtt, int size, int i){ //mantem fixa a linha
+    for(int k = 0; k< size; k++){
+        int pos = get_element_id_component(get_servers(data), k);
+        rtt[i][k] += dist_min[pos];
+    }
+}
+
+
+
 void calculate_distances(Statistics *stat, Data *data)
 {
     double *dist_min = dist_min_initialize(get_num_vertices(data));
+
+    for (int i = 0; i < stat->size_s; i++)
+    {
+        int id = get_element_id_component(get_servers(data), i);
+        dijkstra(id, get_num_vertices(data), dist_min, get_edges(data));
+        
+        fill_partially_rtt_l(data, dist_min ,stat->rtt_sc, stat->size_m, i);
+        fill_partially_rtt_l(data, dist_min ,stat->rtt_sm, stat->size_m, i);
+    }
+
+    
+    for (int i = 0; i < stat->size_m; i++)
+    {
+        int id = get_element_id_component(get_monitors(data), i);
+        dijkstra(id, get_num_vertices(data), dist_min, get_edges(data));
+
+        fill_partially_rtt_c(data, dist_min, stat->rtt_sm, stat->size_s, i);
+        fill_partially_rtt_c(data, dist_min, stat->rtt_mc, stat->size_c, i);
+
+    }
 
     for (int i = 0; i < stat->size_c; i++)
     {
         int id = get_element_id_component(get_clients(data), i);
         dijkstra(id, get_num_vertices(data), dist_min, get_edges(data));
 
-        for (int k = 0; k < stat->size_s; k++)
-        {
-            int pos = get_element_id_component(get_servers(data), k);
-            stat->rtt_sc[k][i] = dist_min[pos];
-        }
-        for (int k = 0; k < stat->size_m; k++)
-        {
-            int pos = get_element_id_component(get_monitors(data), k);
-            stat->rtt_mc[k][i] = dist_min[pos];
-        }
-    }
-    for (int i = 0; i < stat->size_m; i++)
-    {
-        int id = get_element_id_component(get_monitors(data), i);
-        dijkstra(id, get_num_vertices(data), dist_min, get_edges(data));
+        fill_partially_rtt_c(data, dist_min ,stat->rtt_sc, stat->size_s, i);
+        fill_partially_rtt_l(data, dist_min ,stat->rtt_mc, stat->size_m, i);
 
-        for (int k = 0; k < stat->size_s; k++)
-        {
-            int pos = get_element_id_component(get_servers(data), k);
-            stat->rtt_sm[k][i] = dist_min[pos];
-        }
-        for (int k = 0; k < stat->size_c; k++)
-        {
-            int pos = get_element_id_component(get_clients(data), k);
-            stat->rtt_mc[i][k] = stat->rtt_mc[i][k] + dist_min[pos];
-        }
     }
-    for (int i = 0; i < stat->size_s; i++)
-    {
-        int id = get_element_id_component(get_servers(data), i);
-        dijkstra(id, get_num_vertices(data), dist_min, get_edges(data));
-
-        for (int k = 0; k < stat->size_c; k++)
-        {
-            int pos = get_element_id_component(get_clients(data), k);
-            stat->rtt_sc[i][k] = stat->rtt_sc[k][i] + dist_min[pos];
-        }
-        for (int k = 0; k < stat->size_m; k++)
-        {
-            int pos = get_element_id_component(get_monitors(data), k);
-            stat->rtt_sm[i][k] = stat->rtt_sm[i][k] + dist_min[pos];
-        }
-    }
+    
     printf("Matriz sm:\n");
     imprimeMatriz(stat->rtt_sm, stat->size_s, stat->size_m);
     printf("\nMatriz mc:\n");
