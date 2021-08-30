@@ -118,7 +118,7 @@ void destroy_buffer(char *buffer)
   free(buffer);
 }
 
-Data *read_file(char *input_file)
+Data *read_input_file(char *input_file)
 {
   FILE *file;
   file = initialize_file(file, input_file);

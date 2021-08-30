@@ -39,7 +39,7 @@ double *dist_min_initialize(int size)
 
 // int main(int argc, char **argv)
 // {
-//     Data *data = read_file(argv[1]);
+//     Data *data = read_input_file(argv[1]);
 
 //     double *dist_min = dist_min_initialize(get_num_vertices(data));
 

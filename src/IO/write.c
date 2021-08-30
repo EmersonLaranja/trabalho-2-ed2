@@ -2,6 +2,8 @@
 
 void output_statistics(Statistics *stat, char *file_name)
 {
+    order_path_array(stat);
+
     /* Inicializa arquivo em modo de escrita */
     FILE *file;
     file = fopen(file_name, "w");

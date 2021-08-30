@@ -60,6 +60,7 @@ void calculate_inflaction(Statistics *stat, Data *data)
             quant++;
         }
     }
+    destroy_data(data);
 }
 
 void order_path_array(Statistics *stat)
@@ -104,25 +105,13 @@ Statistics *create_statistics(Data *data)
     return stat;
 }
 
-void imprimeMatriz(double **matriz, int linha, int coluna)
-{
-    for (int i = 0; i < linha; i++)
-    {
-        for (int j = 0; j < coluna; j++)
-        {
-            printf("%.16lf ", matriz[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 void fill_partially_rtt_c(Data *data, double *dist_min, double **rtt, int size, int i, Component *component)
 { // mantem fixa a coluna
 
     for (int k = 0; k < size; k++)
     {
         int pos = get_element_id_component(component, k);
-        rtt[k][i] = rtt[k][i] + dist_min[pos];
+        rtt[k][i] += dist_min[pos];
     }
 }
 
@@ -132,7 +121,7 @@ void fill_partially_rtt_l(Data *data, double *dist_min, double **rtt, int size, 
     for (int k = 0; k < size; k++)
     {
         int pos = get_element_id_component(component, k);
-        rtt[i][k] = rtt[i][k] + dist_min[pos];
+        rtt[i][k] += dist_min[pos];
     }
 }
 
@@ -175,8 +164,8 @@ void calculate_distances(Statistics *stat, Data *data)
     double *dist_min = dist_min_initialize(get_num_vertices(data));
 
     calculate_distances_s(stat, data, dist_min);
-    calculate_distances_c(stat, data, dist_min);
     calculate_distances_m(stat, data, dist_min);
+    calculate_distances_c(stat, data, dist_min);
 
     free(dist_min);
 }
