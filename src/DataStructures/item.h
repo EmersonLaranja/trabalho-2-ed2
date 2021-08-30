@@ -17,7 +17,4 @@ typedef struct
     B = t;         \
   } // troca dois nós
 
-Item create_item(int id, double value);
-void show_item(Item item);
-
 #endif

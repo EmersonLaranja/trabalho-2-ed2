@@ -53,7 +53,7 @@ List *create_edge_list(List *edge, int destine, double weight)
   { //se o edge de origin nao existe
     edge = init_list();
   }
-  edge = insert_node(edge, create_item(destine, weight)); //inserindo todos destinos de um mesmo origin
+  edge = insert_node(edge, make_item(destine, weight)); //inserindo todos destinos de um mesmo origin
   return edge;
 }
 

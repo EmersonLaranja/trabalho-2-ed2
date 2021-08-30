@@ -7,6 +7,7 @@
 typedef struct wrapper Wrapper;
 
 Item get_item(Wrapper* wrapper, int index);
+void show_item(Item item);
 void set_map(Wrapper* wrapper, int index, int value);
 Item make_item(int id, double value);
 Wrapper* PQ_init(int maxN); // cria uma min PQ com capacidade maxN

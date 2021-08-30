@@ -92,6 +92,15 @@ Statistics *create_statistics(Data *data)
     return stat;
 }
 
+void imprimeMatriz(double** matriz, int linha, int coluna){
+    for(int i = 0; i < linha; i++){
+        for(int j = 0; j < coluna; j++){
+            printf("%.16lf ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 void calculate_distances(Statistics *stat, Data *data)
 {
     double *dist_min = dist_min_initialize(get_num_vertices(data));
@@ -144,6 +153,10 @@ void calculate_distances(Statistics *stat, Data *data)
             stat->rtt_sm[i][k] = stat->rtt_sm[i][k] + dist_min[pos];
         }
     }
+
+    imprimeMatriz(stat->rtt_sm, stat->size_s, stat->size_m);
+    imprimeMatriz(stat->rtt_mc, stat->size_m, stat->size_c);
+    imprimeMatriz(stat->rtt_sc, stat->size_s, stat->size_c);
 
     free(dist_min);
 }

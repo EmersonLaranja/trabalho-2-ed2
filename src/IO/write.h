@@ -1,5 +1,5 @@
-#ifndef HEAP_H
-#define HEAP_H
+#ifndef WRITE_H
+#define WRITE_H
 
 #include "../DataStructures/statistics.h"
 

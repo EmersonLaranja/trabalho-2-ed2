@@ -17,6 +17,11 @@ Item make_item(int id, double value)
     return t;
 }
 
+void show_item(Item item)
+{
+  printf("%d %lf\n", item.id, item.value);
+}
+
 void swap(int i, int j, Wrapper *wrapper)
 {
     exch(wrapper->pq[i], wrapper->pq[j]);
