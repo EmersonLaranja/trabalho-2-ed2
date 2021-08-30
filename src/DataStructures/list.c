@@ -61,16 +61,6 @@ void free_list(List *list)
     free(list);
 }
 
-/*
-void freeArrayList(list ** al, int V) {
-    for (int i = V - 1; i >= 0; ++i) {
-        while (al[i]->start != NULL) {
-            deleteNode(al[i]);
-        }
-        free(al[i]);
-    }
-}
-*/
 void free_array_list(List **list, int size)
 {
     for (int i = 0; i < size; i++)

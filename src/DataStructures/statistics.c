@@ -136,12 +136,8 @@ void fill_partially_rtt_l(Data *data, double *dist_min, double **rtt, int size, 
     }
 }
 
-// void
-
-void calculate_distances(Statistics *stat, Data *data)
+void calculate_distances_s(Statistics *stat, Data *data, double *dist_min)
 {
-    double *dist_min = dist_min_initialize(get_num_vertices(data));
-
     for (int i = 0; i < stat->size_s; i++)
     {
         int id = get_element_id_component(get_servers(data), i);
@@ -150,7 +146,9 @@ void calculate_distances(Statistics *stat, Data *data)
         fill_partially_rtt_l(data, dist_min, stat->rtt_sm, stat->size_m, i, get_monitors(data));
         fill_partially_rtt_l(data, dist_min, stat->rtt_sc, stat->size_c, i, get_clients(data));
     }
-
+}
+void calculate_distances_c(Statistics *stat, Data *data, double *dist_min)
+{
     for (int i = 0; i < stat->size_c; i++)
     {
         int id = get_element_id_component(get_clients(data), i);
@@ -159,7 +157,9 @@ void calculate_distances(Statistics *stat, Data *data)
         fill_partially_rtt_l(data, dist_min, stat->rtt_cm, stat->size_m, i, get_monitors(data));
         fill_partially_rtt_c(data, dist_min, stat->rtt_sc, stat->size_s, i, get_servers(data));
     }
-
+}
+void calculate_distances_m(Statistics *stat, Data *data, double *dist_min)
+{
     for (int i = 0; i < stat->size_m; i++)
     {
         int id = get_element_id_component(get_monitors(data), i);
@@ -168,6 +168,16 @@ void calculate_distances(Statistics *stat, Data *data)
         fill_partially_rtt_c(data, dist_min, stat->rtt_sm, stat->size_s, i, get_servers(data));
         fill_partially_rtt_c(data, dist_min, stat->rtt_cm, stat->size_c, i, get_clients(data));
     }
+}
+
+void calculate_distances(Statistics *stat, Data *data)
+{
+    double *dist_min = dist_min_initialize(get_num_vertices(data));
+
+    calculate_distances_s(stat, data, dist_min);
+    calculate_distances_c(stat, data, dist_min);
+    calculate_distances_m(stat, data, dist_min);
+
     free(dist_min);
 }
 

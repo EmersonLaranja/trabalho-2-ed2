@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "./IO/read.h"
 #include "./DataStructures/data.h"
 #include "./DataStructures/statistics.h"
@@ -6,6 +7,9 @@
 
 int main(int argc, char **argv)
 {
+  clock_t start, stop;
+  start = clock();
+
   Data *data = read_file(argv[1]);
 
   Statistics *statistics = create_statistics(data);
@@ -19,5 +23,11 @@ int main(int argc, char **argv)
   output_statistics(statistics, argv[2]);
 
   destroy_statistics(statistics);
+
   destroy_data(data);
+  stop = clock();
+  double time_taken = ((double)stop - start) / CLOCKS_PER_SEC;
+  printf(" %.4f\n", time_taken);
+
+  return 0;
 }
