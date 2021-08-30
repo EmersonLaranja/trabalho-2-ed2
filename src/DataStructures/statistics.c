@@ -26,11 +26,11 @@ Path *get_current_path(Statistics *stat, int index)
 /* Calcula o RTT com relação a todos os monitores */
 double calculate_relative_rtt(Statistics *stat, int pos_s, int pos_c)
 {
-    double min = (double)INT_MAX;
+    double min = INT_MAX;
     double relative;
     for (int m = 0; m < stat->size_m; m++)
     {
-        relative = stat->rtt_sm[pos_s][m] + stat->rtt_cm[m][pos_c];
+        relative = stat->rtt_sm[pos_s][m] + stat->rtt_cm[pos_c][m];
         if (min > relative)
         {
             min = relative;
@@ -39,10 +39,12 @@ double calculate_relative_rtt(Statistics *stat, int pos_s, int pos_c)
     return min;
 }
 
-void calculate_inflaction(Statistics *stat)
+void calculate_inflaction(Statistics *stat, Data *data)
 {
     int quant = 0;
     double inflaction = 0;
+    int id_services, id_clients;
+
     for (int s = 0; s < stat->size_s; s++)
     {
         for (int c = 0; c < stat->size_c; c++)
@@ -50,7 +52,10 @@ void calculate_inflaction(Statistics *stat)
             inflaction = calculate_relative_rtt(stat, s, c);
             inflaction /= stat->rtt_sc[s][c];
 
-            Path *path = create_path(s, c, inflaction);
+            id_services = get_element_id_component(get_servers(data), s);
+            id_clients = get_element_id_component(get_clients(data), c);
+
+            Path *path = create_path(id_services, id_clients, inflaction);
             stat->path_array[quant] = path;
             quant++;
         }
@@ -161,14 +166,6 @@ void calculate_distances(Statistics *stat, Data *data)
         fill_partially_rtt_c(data, dist_min, stat->rtt_sm, stat->size_s, i, get_servers(data));
         fill_partially_rtt_c(data, dist_min, stat->rtt_cm, stat->size_c, i, get_clients(data));
     }
-
-    printf("RTT_SM:\n");
-    imprimeMatriz(stat->rtt_sm, stat->size_s, stat->size_m);
-    printf("\nRTT_SC:\n");
-    imprimeMatriz(stat->rtt_sc, stat->size_s, stat->size_c);
-    printf("\nRTT_CM:\n");
-    imprimeMatriz(stat->rtt_cm, stat->size_c, stat->size_m);
-
     free(dist_min);
 }
 

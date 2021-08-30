@@ -11,7 +11,7 @@ Path *create_path(int origin, int destiny, double inflaction)
 {
   Path *path = (Path *)malloc(sizeof(Path));
   path->origin = origin;
-  path->origin = destiny;
+  path->destiny = destiny;
   path->inflaction = inflaction;
 
   return path;
@@ -23,10 +23,10 @@ Path **init_path(int size)
 
 void destroy_path_array(Path **path, int size)
 {
-   for (int i = 0; i < size; i++)
-   {
-     free(path[i]);
-   }
+  for (int i = 0; i < size; i++)
+  {
+    free(path[i]);
+  }
 }
 
 // ------getters---------
@@ -61,6 +61,24 @@ int compare_path(const void *par1, const void *par2)
   }
   else
   {
-    return 0;
+    if (p1->origin > p2->origin)
+    {
+      return 1;
+    }
+    else if (p1->origin < p2->origin)
+    {
+      return -1;
+    }
+    else
+    {
+      if (p1->destiny > p2->destiny)
+      {
+        return 1;
+      }
+      else if (p1->destiny < p2->destiny)
+      {
+        return -1;
+      }
+    }
   }
 }

@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 
   calculate_distances(statistics, data);
 
-  calculate_inflaction(statistics);
+  calculate_inflaction(statistics, data);
 
   order_path_array(statistics);
 
