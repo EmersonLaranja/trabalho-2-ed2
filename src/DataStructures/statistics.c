@@ -153,9 +153,11 @@ void calculate_distances(Statistics *stat, Data *data)
             stat->rtt_sm[i][k] = stat->rtt_sm[i][k] + dist_min[pos];
         }
     }
-
+    printf("Matriz sm:\n");
     imprimeMatriz(stat->rtt_sm, stat->size_s, stat->size_m);
+    printf("\nMatriz mc:\n");
     imprimeMatriz(stat->rtt_mc, stat->size_m, stat->size_c);
+    printf("\nMatriz sc:\n");
     imprimeMatriz(stat->rtt_sc, stat->size_s, stat->size_c);
 
     free(dist_min);

@@ -5,7 +5,7 @@ void output_statistics(Statistics* stat, char* file_name){
     FILE * file;
     file = fopen(file_name, "w");
 
-    if (file == NULL){
+    if (file == NULL) {
         printf("Arquivo não pode ser criado.\n");
         exit(1);
     }
