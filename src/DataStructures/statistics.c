@@ -136,6 +136,8 @@ void fill_partially_rtt_l(Data *data, double *dist_min, double **rtt, int size, 
     }
 }
 
+// void
+
 void calculate_distances(Statistics *stat, Data *data)
 {
     double *dist_min = dist_min_initialize(get_num_vertices(data));
@@ -181,7 +183,7 @@ void destroy_rtt(double **matrix, int size)
 
 void destroy_statistics(Statistics *stat)
 {
-    destroy_rtt(stat->rtt_cm, stat->size_m);
+    destroy_rtt(stat->rtt_cm, stat->size_c);
     destroy_rtt(stat->rtt_sm, stat->size_s);
     destroy_rtt(stat->rtt_sc, stat->size_s);
 
