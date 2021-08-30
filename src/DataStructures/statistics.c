@@ -60,6 +60,14 @@ void order_path_array(Statistics *stat)
     qsort(stat->path_array, stat->size_path_array, sizeof(Path *), compare_path);
 }
 
+double ** alloc_matrix(int num_l, int num_c){
+    double** matrix = (double **)malloc(sizeof(double *) * num_l);
+    for(int i = 0; i < num_l; i++){
+        matrix[i] = (double *)malloc(sizeof(double) * num_c);
+    }
+    return matrix;
+}
+
 Statistics *create_statistics(Data *data)
 {
     Statistics *stat = (Statistics *)malloc(sizeof(Statistics));
@@ -71,23 +79,10 @@ Statistics *create_statistics(Data *data)
     stat->size_path_array = stat->size_s * stat->size_c;
     stat->path_array = (Path **)malloc(stat->size_path_array * sizeof(Path *));
 
-    stat->rtt_sm = (double **)malloc(sizeof(double *) * stat->size_s);
-    for (int i = 0; i < stat->size_s; i++)
-    {
-        stat->rtt_sm[i] = (double *)malloc(sizeof(double) * stat->size_m);
-    }
 
-    stat->rtt_mc = (double **)malloc(sizeof(double *) * stat->size_m);
-    for (int i = 0; i < stat->size_m; i++)
-    {
-        stat->rtt_mc[i] = (double *)malloc(sizeof(double) * stat->size_c);
-    }
-
-    stat->rtt_sc = (double **)malloc(sizeof(double *) * stat->size_s);
-    for (int i = 0; i < stat->size_s; i++)
-    {
-        stat->rtt_sc[i] = (double *)malloc(sizeof(double) * stat->size_c);
-    }
+    stat->rtt_sm = alloc_matrix(stat->size_s,stat->size_m);
+    stat->rtt_mc = alloc_matrix(stat->size_m,stat->size_c);
+    stat->rtt_sc = alloc_matrix(stat->size_s,stat->size_c);
 
     return stat;
 }
@@ -163,25 +158,22 @@ void calculate_distances(Statistics *stat, Data *data)
     free(dist_min);
 }
 
+
+void destroy_rtt(double** matrix, int size){
+
+    for(int i = 0 ; i < size; i++){
+        free(matrix[i]);
+    }
+    free(matrix);
+
+}
+
+
 void destroy_statistics(Statistics *stat)
 {
-    for (int i = 0; i < stat->size_m; i++)
-    {
-        free(stat->rtt_mc[i]);
-    }
-    free(stat->rtt_mc);
-
-    for (int i = 0; i < stat->size_s; i++)
-    {
-        free(stat->rtt_sm[i]);
-    }
-    free(stat->rtt_sm);
-
-    for (int i = 0; i < stat->size_s; i++)
-    {
-        free(stat->rtt_sc[i]);
-    }
-    free(stat->rtt_sc);
+    destroy_rtt(stat->rtt_mc, stat->size_m);
+    destroy_rtt(stat->rtt_sm, stat->size_s);
+    destroy_rtt(stat->rtt_sc, stat->size_s);
 
     destroy_path_array(stat->path_array, stat->size_path_array);
 
