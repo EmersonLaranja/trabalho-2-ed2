@@ -5,6 +5,8 @@
 #include "../DataStructures/data.h"
 #include "../DataStructures/statistics.h"
 
+/* Algoritmo implementado tendo como referência o link a seguir 
+ * https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/ */
 void dijkstra(int id, int number_vertices, double *dist, List **list)
 {
     Wrapper *min_heap = PQ_init(number_vertices);

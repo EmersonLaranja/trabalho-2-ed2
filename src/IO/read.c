@@ -162,7 +162,7 @@ Data *read_input_file(char *input_file)
   int *vet_monitors = read_monitors(num_monitors, file);
   Component *monitors = create_component(num_monitors, vet_monitors);
 
-  /* Lê os dados do grafo e armazena em uma lista encadeada */
+  /* Lê os dados do grafo e armazena em uma lista de adjacências */
   List **edges = read_edges(num_edges, num_vertices, file);
 
   /* Armazena todos os dados na struct data */

@@ -3,6 +3,10 @@
 
 #include "../DataStructures/statistics.h"
 
-void output_statistics(Statistics* stat, char* file_name);
+/** Inicializa um arquivo de saida
+ * @param[stat] variável que possui dados estatisticos pedidos.
+ * @param[file] ponteiro tipo FILE a ser apontado para o arquivo.
+ **/
+void output_statistics(Statistics *stat, char *file);
 
 #endif

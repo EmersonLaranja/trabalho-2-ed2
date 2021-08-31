@@ -16,10 +16,6 @@ Path *create_path(int origin, int destiny, double inflaction)
 
   return path;
 }
-Path **init_path(int size)
-{
-  return (Path **)malloc(size * sizeof(Path *));
-}
 
 void destroy_path_array(Path **path, int size)
 {
@@ -44,14 +40,15 @@ double get_inflaction(Path *path)
   return path->inflaction;
 }
 
-int compare_path(const void *par1, const void *par2)
+int compare_path(const void *ph1, const void *ph2)
 {
-  /* *(Path **)par1 faz com que peguemos o conteúdo do ponteiro,
-     * ou seja, é o Path* do vetor que é apontado por par1. */
-  Path *p1 = *(Path **)par1;
-  Path *p2 = *(Path **)par2;
+  /* *(Path **)ph1 faz com que peguemos o conteúdo do ponteiro,
+     * ou seja, é o Path* do vetor que é apontado por ph1. */
+  Path *p1 = *(Path **)ph1;
+  Path *p2 = *(Path **)ph2;
 
-  if (p1->inflaction > p2->inflaction)
+  /* Ordem crescente */
+  if (p1->inflaction > p2->inflaction) /* Primeiro criterio de ordenação: Inflação */
   {
     return 1;
   }
@@ -62,6 +59,7 @@ int compare_path(const void *par1, const void *par2)
   else
   {
     if (p1->origin > p2->origin)
+    /* Segundo criterio de ordenação: Vertice de origem */
     {
       return 1;
     }
@@ -70,7 +68,8 @@ int compare_path(const void *par1, const void *par2)
       return -1;
     }
     else
-    {
+    { /* Terceiro criterio de ordenação: Vertice de destino */
+
       if (p1->destiny > p2->destiny)
       {
         return 1;

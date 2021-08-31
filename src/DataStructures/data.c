@@ -20,7 +20,6 @@ Data *alloc_data()
 
 void *destroy_data(Data *data)
 {
-
   destroy_component(data->servers);
   destroy_component(data->clients);
   destroy_component(data->monitors);

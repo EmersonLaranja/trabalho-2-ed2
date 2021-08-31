@@ -26,7 +26,7 @@ List *insert_node(List *list, Item vertices);
  * @param[node] variável a ser consultada.
  * @return variavel do tipo Item representando o atributo vertices da variavel node
  **/
-Item return_item(Node *node);
+Item get_item_list(Node *node);
 
 /** Desaloca memória alocada em list.
  * @param[list] variável a ser liberada.

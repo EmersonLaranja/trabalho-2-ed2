@@ -26,16 +26,8 @@ void destroy_component(Component *component)
     free(component);
 }
 
-void show_component(Component *component)
+int get_element_id_component(Component *component, int position)
 {
-    for (int i = 0; i < component->size; i++)
-    {
-        printf("%d ", component->vector[i]);
-    }
-    printf("\n");
-}
-
-int get_element_id_component(Component* component, int position){
     /* Retorna o componente referente ao id */
     return component->vector[position];
 }
