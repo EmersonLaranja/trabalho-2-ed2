@@ -18,14 +18,6 @@ Data *alloc_data()
   return (Data *)malloc(sizeof(Data));
 }
 
-void show_data(Data *data)
-{
-  show_component(data->servers);
-  show_component(data->clients);
-  show_component(data->monitors);
-  show_array_list(data->edges, data->num_vertices);
-}
-
 void *destroy_data(Data *data)
 {
 

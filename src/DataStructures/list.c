@@ -71,23 +71,6 @@ void free_array_list(List **list, int size)
     free(list);
 }
 
-void show_array_list(List **edges, int num_vertices)
-{
-    for (int i = 0; i < num_vertices; i++)
-    {
-        if (edges[i] != NULL)
-            show_list(edges[i]);
-    }
-};
-
-void show_list(List *list)
-{
-    Node *p;
-    for (p = list->start; p != NULL; p = p->next)
-    {
-        show_item(p->vertices);
-    }
-}
 
 void update_dist(List **list, int id_min, double *min_dist, Wrapper *min_heap)
 {
