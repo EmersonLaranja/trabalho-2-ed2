@@ -29,6 +29,7 @@ double *dist_min_initialize(int size)
 {
     double *dist_min = (double *)malloc(sizeof(double) * size);
 
+    /* Inicializa vetor com 0 */
     for (int i = 0; i < size; i++)
     {
         dist_min[i] = 0;
@@ -36,18 +37,3 @@ double *dist_min_initialize(int size)
 
     return dist_min;
 }
-
-// int main(int argc, char **argv)
-// {
-//     Data *data = read_input_file(argv[1]);
-
-//     double *dist_min = dist_min_initialize(get_num_vertices(data));
-
-//     Statistics *statistics = create_statistics(data);
-//     calculate_distances(statistics, data);
-//     output_statistics(statistics);
-//     // free(dist_min);
-//     destroy_statistics(statistics);
-//     destroy_data(data);
-//     return 0;
-// }

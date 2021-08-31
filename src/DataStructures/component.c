@@ -36,5 +36,6 @@ void show_component(Component *component)
 }
 
 int get_element_id_component(Component* component, int position){
+    /* Retorna o componente referente ao id */
     return component->vector[position];
 }

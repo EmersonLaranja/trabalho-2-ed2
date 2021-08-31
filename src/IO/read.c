@@ -64,6 +64,7 @@ List **read_edges(int num_edges, int num_vertices, FILE *file)
 
   int origin, destine;
   double weight;
+  /* Lê o vertice de origem, destino e o peso entre eles e armazena na lista */
   for (int i = 0; i < num_edges; i++)
   {
     fscanf(file, "%d %d %lf", &origin, &destine, &weight);
@@ -75,6 +76,7 @@ List **read_edges(int num_edges, int num_vertices, FILE *file)
 
 void file_was_opened(FILE *file)
 {
+  /* Caso ocorra erro ao tentar ler arquivo */
   if (file == NULL)
   {
     printf("ERRO: falha na abertura do arquivo de entrada\n");
@@ -84,7 +86,7 @@ void file_was_opened(FILE *file)
 
 FILE *initialize_file(FILE *file, char *name)
 {
-
+  /* Inicializa arquivo em modo de leitura */
   file = fopen(name, "r");
   file_was_opened(file);
 
@@ -108,6 +110,7 @@ void verify_args_length(int num_args)
 
 char *define_buffer(FILE *file, size_t bufsize)
 {
+  /* Define o buffer utilizado para leitura dos dados */
   char *buffer = NULL;
   buffer = (char *)malloc(bufsize * sizeof(char));
   return buffer;
@@ -126,16 +129,19 @@ Data *read_input_file(char *input_file)
   char *buffer = define_buffer(file, bufsize);
 
   Data *data = alloc_data();
-  const char *token = " ";
+  const char *token = " "; /* Delimitador */
 
+  /* Lê a primeira linha do arquivo, que contem o numero de vertices e arestas */
   getline(&buffer, &bufsize, file);
 
   int num_vertices = atoi(strtok(buffer, token));
   int num_edges = atoi(strtok(NULL, token));
 
+  /* Armazena em data os dois dados lidos */
   set_num_edges(data, num_edges);
   set_num_vertices(data, num_vertices);
 
+  /* Lê a segunda linha do arquivo, que contem o numero de servidores, clientes e monitores */
   getline(&buffer, &bufsize, file);
 
   int num_servers = atoi(strtok(buffer, token));
@@ -144,17 +150,22 @@ Data *read_input_file(char *input_file)
 
   destroy_buffer(buffer);
 
+  /* Faz a leitura de todos os servidores */
   int *vet_servers = read_servers(num_servers, file);
   Component *servers = create_component(num_servers, vet_servers);
 
+  /* Faz a leitura de todos os clientes */
   int *vet_clients = read_clients(num_clients, file);
   Component *clients = create_component(num_clients, vet_clients);
 
+  /* Faz a leitura de todos os monitores */
   int *vet_monitors = read_monitors(num_monitors, file);
   Component *monitors = create_component(num_monitors, vet_monitors);
 
+  /* Lê os dados do grafo e armazena em uma lista encadeada */
   List **edges = read_edges(num_edges, num_vertices, file);
 
+  /* Armazena todos os dados na struct data */
   set_servers(data, servers);
   set_clients(data, clients);
   set_monitors(data, monitors);
