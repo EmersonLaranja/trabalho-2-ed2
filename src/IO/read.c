@@ -84,7 +84,7 @@ void file_was_opened(FILE *file)
 
 FILE *initialize_file(FILE *file, char *name)
 {
-  /* Inicializa arquivo em modo de leitura */
+
   file = fopen(name, "r");
   file_was_opened(file);
 
